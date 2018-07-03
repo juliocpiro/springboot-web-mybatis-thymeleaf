@@ -1,6 +1,6 @@
 package com.trafico.model;
 
-public class ResumenHistorico {
+public class Usabilidad {
 	private String fechaLlamada;
 	private String canalVentaAgrup;
 	private String app;

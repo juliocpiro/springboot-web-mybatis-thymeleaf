@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.trafico.mapper.TraficoMapper;
+import com.trafico.model.Despliegue;
+import com.trafico.model.Adopcion;
 import com.trafico.model.Convertibilidad;
-import com.trafico.model.ResumenGeneral;
-import com.trafico.model.ResumenHistorico;
+import com.trafico.model.Usabilidad;
 import com.trafico.model.Trafico;
 import com.trafico.service.TraficoService;
 
@@ -31,10 +32,10 @@ public class TraficoServiceImpl implements TraficoService	{
 	}
 	
 	@Override
-	public List<ResumenHistorico> resumenHistorico(){
-		List<ResumenHistorico> retorno = null;
+	public List<Usabilidad> usabilidad(){
+		List<Usabilidad> retorno = null;
 		try {
-			retorno = traficoMapper.resumenHistorico();
+			retorno = traficoMapper.usabilidad();
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
@@ -42,16 +43,26 @@ public class TraficoServiceImpl implements TraficoService	{
 	}
 	
 	@Override
-	public List<ResumenGeneral> resumenGeneral(){
-		List<ResumenGeneral> retorno = null;
+	public List<Adopcion> adopcion(){
+		List<Adopcion> retorno = null;
 		try {
-			retorno = traficoMapper.resumenGeneral();
+			retorno = traficoMapper.adopcion();
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
 		return retorno;
 	}
 	
+	@Override
+	public List<Despliegue> despliegue(){
+		List<Despliegue> retorno = null;
+		try {
+			retorno = traficoMapper.despliegue();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return retorno;
+	}
 	@Override
 	public List<Convertibilidad> convertibilidad(){
 		List<Convertibilidad> retorno = null;
@@ -61,5 +72,5 @@ public class TraficoServiceImpl implements TraficoService	{
 			ex.printStackTrace();
 		}
 		return retorno;
-	}
+	}	
 }

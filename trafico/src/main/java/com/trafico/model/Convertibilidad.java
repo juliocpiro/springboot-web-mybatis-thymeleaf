@@ -1,19 +1,35 @@
 package com.trafico.model;
 
 public class Convertibilidad {
-	private String canalVentaAgrup;
-	private String total;
-	public String getCanalVentaAgrup() {
-		return canalVentaAgrup;
-	}
-	public void setCanalVentaAgrup(String canalVentaAgrup) {
-		this.canalVentaAgrup = canalVentaAgrup;
-	}
-	public String getTotal() {
-		return total;
-	}
-	public void setTotal(String total) {
-		this.total = total;
-	}
-	
+private String estadoGestion;
+private String ventasApp;
+private String ventasWeb;
+private String otros;
+public String getEstadoGestion() {
+	return estadoGestion;
+}
+public void setEstadoGestion(String estadoGestion) {
+	this.estadoGestion = estadoGestion;
+}
+public String getVentasApp() {
+	return ventasApp;
+}
+public void setVentasApp(String ventasApp) {
+	this.ventasApp = ventasApp;
+}
+public String getVentasWeb() {
+	return ventasWeb;
+}
+public void setVentasWeb(String ventasWeb) {
+	this.ventasWeb = ventasWeb;
+}
+public String getOtros() {
+	return otros;
+}
+public void setOtros(String otros) {
+	this.otros = otros;
+}
+
+
+
 }

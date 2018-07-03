@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.trafico.model.Convertibilidad;
-import com.trafico.model.ResumenGeneral;
-import com.trafico.model.ResumenHistorico;
+import com.trafico.model.Despliegue;
+import com.trafico.model.Adopcion;
+import com.trafico.model.Usabilidad;
 import com.trafico.service.TraficoService;
 
 @Controller
@@ -32,12 +32,12 @@ public class TraficoController {
 		return "html/trafico";
 	}
 	
-	@PostMapping("/resumenHistorico")
-	public @ResponseBody Map<String, Object> resumenHistorico(HttpSession session, HttpServletRequest request) {
-		System.out.println("Inicio resumenHistorico");
+	@PostMapping("/usabilidad")
+	public @ResponseBody Map<String, Object> usabilidad(HttpSession session, HttpServletRequest request) {
+		System.out.println("Inicio usabilidad");
 		Map<String, Object> retorno = new HashMap<String, Object>();
 		try {
-			List<ResumenHistorico> data = traficoService.resumenHistorico();
+			List<Usabilidad> data = traficoService.usabilidad();
 			retorno.put("data", data);
 		}catch(Exception ex) {
 			ex.printStackTrace();
@@ -45,12 +45,12 @@ public class TraficoController {
 		return retorno;
 	}
 	
-	@PostMapping("/resumenGeneral")
-	public @ResponseBody Map<String, Object> resumenGeneral(HttpSession session, HttpServletRequest request) {
-		System.out.println("Inicio resumenGeneral");
+	@PostMapping("/adopcion")
+	public @ResponseBody Map<String, Object> adopcion(HttpSession session, HttpServletRequest request) {
+		System.out.println("Inicio adopcion");
 		Map<String, Object> retorno = new HashMap<String, Object>();
 		try {
-			List<ResumenGeneral> data = traficoService.resumenGeneral();
+			List<Adopcion> data = traficoService.adopcion();
 			retorno.put("data", data);
 		}catch(Exception ex) {
 			ex.printStackTrace();
@@ -58,12 +58,24 @@ public class TraficoController {
 		return retorno;
 	}
 	
+	@PostMapping("/despliegue")
+	public @ResponseBody Map<String, Object> despliegue(HttpSession session, HttpServletRequest request) {
+		System.out.println("Inicio despliegue");
+		Map<String, Object> retorno = new HashMap<String, Object>();
+		try {
+			List<Despliegue> data = traficoService.despliegue();
+			retorno.put("data", data);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return retorno;
+	}
 	@PostMapping("/convertibilidad")
 	public @ResponseBody Map<String, Object> convertibilidad(HttpSession session, HttpServletRequest request) {
-		System.out.println("Inicio convertibilidad");
+		System.out.println("Inicio despliegue");
 		Map<String, Object> retorno = new HashMap<String, Object>();
 		try {
-			List<Convertibilidad> data = traficoService.convertibilidad();
+			List<Despliegue> data = traficoService.despliegue();
 			retorno.put("data", data);
 		}catch(Exception ex) {
 			ex.printStackTrace();

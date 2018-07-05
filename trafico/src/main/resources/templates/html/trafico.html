@@ -18,37 +18,49 @@
 	</head>
 	<body>
 		<div class="loading" style="display:none;"><img src="/img/load.gif" height="42" width="42"/></div>
-		<div class="container" style="text-align:center;">
-			<div class="py-4 text-center">
-				<h2>TRAFICO</h2>
+		<!-- header -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark   navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="#">TRAFICO</a>
+			<i class="fa fa-bar-chart text-white"></i>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+		  
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto"></ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-group mb-2">
+						<label for="" class="text-white">Reporte</label>
+					</div>
+					<div class="form-group mx-sm-3 mb-2">
+						<select class="custom-select" id="slctReporte">
+							<option value="" selected>Seleccione...</option>
+							<option value="1">Usabilidad</option>
+							<option value="2">Despliegue</option>
+							<option value="3">Adopción</option>
+							<option value="4">Convertibilidad</option>
+						</select>
+					</div>
+					<button type="submit" id="btnExportar" class="btn btn-primary mb-2"><i class="fa fa-search"></i></button>
+				</form>	
 			</div>
-			<div class="row" style="max-width:400px;margin:auto;">
-				<div class="col-md-12 order-md-1">
-					<form class="form-inline">
-						<div class="form-group mb-2">
-							<label for="" class="">Reporte</label>
-						</div>
-						<div class="form-group mx-sm-3 mb-2">
-							<select class="custom-select" id="slctReporte">
-								<option value="" selected>Seleccione...</option>
-								<option value="1">Usabilidad</option>
-								<option value="2">Despliegue</option>
-								<option value="3">Adopción</option>
-								<option value="4">Convertibilidad</option>
-							</select>
-						</div>
-						<button type="submit" id="btnExportar" class="btn btn-primary mb-2">Exportar</button>
-					</form>		
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 order-md-1" id="divResultados">
-					<table class="table" id="tblUsabilidad" style="display:none;"></table>
-					<table class="table" id="tblDespliegue" style="display:none;"></table>
-					<table class="table" id="tblAdopcion" style="display:none;"></table>
-					<table class="table" id="tblConvertibilidad" style="display:none;"></table>
-				</div>				
-			</div>
+		</nav>
+		
+		<div class="container" style="text-align:center;margin-top:5px;margin-bottom:60px;">
+			<div class="table-responsive" id="divResultados">
+				<table class="table table-sm" id="tblUsabilidad" style="display:none;"></table>
+				<table class="table table-sm" id="tblDespliegue" style="display:none;"></table>
+				<table class="table table-sm" id="tblAdopcion" style="display:none;"></table>
+				<table class="table table-sm table-bordered" id="tblConvertibilidadRegistros" style="display:none;margin-bottom:20px;"></table>
+				<table class="table table-sm" id="tblConvertibilidad" style="display:none;"></table>
+			</div>				
 		</div>
+		
+		<!-- footer -->
+		<footer class="bg-dark rounded-top text-center" style="position:fixed;bottom:0px;width:100%;">
+		  <div class="container py-2">
+		    <p class="text-white my-2">&copy; Diana Medrano</p>
+		  </div>
+		</footer>
 	</body>
 </html>

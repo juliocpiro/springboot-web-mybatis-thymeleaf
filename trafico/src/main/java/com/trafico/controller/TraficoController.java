@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.trafico.model.Despliegue;
 import com.trafico.model.Adopcion;
+import com.trafico.model.Convertibilidad;
+import com.trafico.model.ConvertibilidadRegistro;
+import com.trafico.model.Despliegue;
 import com.trafico.model.Usabilidad;
 import com.trafico.service.TraficoService;
 
@@ -75,8 +77,10 @@ public class TraficoController {
 		System.out.println("Inicio despliegue");
 		Map<String, Object> retorno = new HashMap<String, Object>();
 		try {
-			List<Despliegue> data = traficoService.despliegue();
-			retorno.put("data", data);
+			List<Convertibilidad> dataC = traficoService.convertibilidad();
+			List<ConvertibilidadRegistro> dataCR = traficoService.convertibilidadRegistro();
+			retorno.put("dataC", dataC);
+			retorno.put("dataCR", dataCR);
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}

@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.trafico.mapper.TraficoMapper;
-import com.trafico.model.Despliegue;
 import com.trafico.model.Adopcion;
 import com.trafico.model.Convertibilidad;
-import com.trafico.model.Usabilidad;
+import com.trafico.model.ConvertibilidadRegistro;
+import com.trafico.model.Despliegue;
 import com.trafico.model.Trafico;
+import com.trafico.model.Usabilidad;
 import com.trafico.service.TraficoService;
 
 @Service()
@@ -68,6 +69,16 @@ public class TraficoServiceImpl implements TraficoService	{
 		List<Convertibilidad> retorno = null;
 		try {
 			retorno = traficoMapper.convertibilidad();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return retorno;
+	}	
+	@Override
+	public List<ConvertibilidadRegistro> convertibilidadRegistro(){
+		List<ConvertibilidadRegistro> retorno = null;
+		try {
+			retorno = traficoMapper.convertibilidadRegistro();
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}

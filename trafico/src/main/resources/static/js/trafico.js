@@ -6,21 +6,33 @@ $(function(){
 		var reporte = $("#slctReporte").val();
 		switch (reporte) {
 			case "1":
-				usabilidad();
-				break;
+				usabilidad();break;
 			case "2":
-				despliegue();
-				break;
+				despliegue();break;
 			case "3":
-				adopcion();
-				break;
+				adopcion();break;
 			case "4":
-				convertibilidad();
-				break;
+				convertibilidad();break;
+			case "5":
+				evolutivo();break;
 			default:
 				break;
 		}
 	});
+	$("#slctReporte").change(function(){
+		var reporte = $("#slctReporte").val();
+		switch (reporte) {
+			case "2":
+				$("div[grupo='mes']").show();break;
+			case "3":
+				$("div[grupo='mes']").show();break;
+			case "4":
+				$("div[grupo='mes']").show();break;
+			default:
+				$("div[grupo='mes']").hide();break;
+		}
+	});
+	$("#slctReporte").trigger("change");
 })
 
 
@@ -44,6 +56,12 @@ function fillUsabilidad(data){
 	var datax = hallarSubtotales(data);
 	
 	$.each(datax,function(k,v){
+		var total = (parseInt(v.app) + parseInt(v.web) + parseInt(v.otros));
+		var usabilidadApp = Math.round( (v.app*100/total) * 100 )/100;
+		var usabilidadWeb = Math.round( (v.web*100/total) * 100 )/100;
+		var usabilidadTotal = Math.round( (usabilidadApp + usabilidadWeb) * 100 ) / 100;
+		
+		
 		if(v.fechaLlamada!=""){
 			html+="<tr class='table-warning'>";
 		}else{
@@ -54,11 +72,13 @@ function fillUsabilidad(data){
 		html+="<td>"+v.app+"</td>";
 		html+="<td>"+v.web+"</td>";
 		html+="<td>"+v.otros+"</td>";
-//		html+="<td>"+v.total+"</td>";
-		html+="<td>"+ (parseInt(v.app) + parseInt(v.web) + parseInt(v.otros)) +"</td>";
-		html+="<td>"+v.usabilidadApp+"</td>";
-		html+="<td>"+v.usabilidadWeb+"</td>";
-		html+="<td>"+ (Math.round( (parseFloat(v.usabilidadApp) + parseFloat(v.usabilidadWeb)) * 100) / 100)   +"</td>";
+		// html+="<td>"+v.total+"</td>";
+		html+="<td>"+ total +"</td>";
+		// html+="<td>"+v.usabilidadApp+"</td>";
+		html+="<td>"+ usabilidadApp +"%</td>";
+		//html+="<td>"+v.usabilidadWeb+"</td>";
+		html+="<td>"+ usabilidadWeb +"%</td>";
+		html+="<td>"+ usabilidadTotal +"%</td>";
 		
 		html+="</tr>";
 	})
@@ -104,7 +124,9 @@ function adopcion(){
 	$.ajax({
 		url:"trafico/adopcion",
 		type:'post',
-		data:{},
+		data:{
+			mes:$("#slctMes").val()
+		},
 		beforeSend:function(){$(".loading").show();},
 		success:function(obj){
 			$(".loading").hide();
@@ -141,7 +163,7 @@ function fillAdopcion(data){
 		sumaTotal += parseInt(total);
 		sumaAdopcion += parseFloat(adopcion);
 	})
-	//TOTALES
+	// TOTALES
 	html+="<tr class='table-warning'>";
 	html+="<td>TOTALES</td>";
 	html+="<td>"+ sumaVendApp +"</td>";
@@ -162,7 +184,9 @@ function despliegue(){
 	$.ajax({
 		url:"trafico/despliegue",
 		type:'post',
-		data:{},
+		data:{
+			mes:$("#slctMes").val()
+		},
 		beforeSend:function(){$(".loading").show();},
 		success:function(obj){
 			$(".loading").hide();
@@ -178,18 +202,17 @@ function fillDespliegue(data){
 	var html="<thead class='thead-dark'><tr><th scope='col'>CANAL VENTA AGRUP</th><th scope='col'>VEND APP</th><th scope='col'>VEND WEB</th><th scope='col'>OTROS</th><th scope='col'>TOTAL</th><th scope='col'>DESPL APP</th><th scope='col'>DESPL WEB</th></tr></thead><tbody>";
 	$.each(data,function(k,v){
 		var total = parseInt(v.vendApp)+parseInt(v.vendWeb)+parseInt(v.otros);
-		var desplApp = Math.round( (v.vendApp/ total ) * 100) / 100;
-		var desplWeb = Math.round( (v.vendWeb/ total ) * 100) / 100;
+		var desplApp = Math.round( (v.vendApp*100/total) * 100 )/100;
+		var desplWeb = Math.round( (v.vendWeb*100/total) * 100 )/100;
 		
 		html+="<tr>";
 		html+="<td>"+ v.canalVentaAgrup +"</td>";
 		html+="<td>"+ v.vendApp +"</td>";
 		html+="<td>"+ v.vendWeb +"</td>";
 		html+="<td>"+ v.otros +"</td>";
-//		html+="<td>"+ v.total +"</td>";
 		html+="<td>"+ total +"</td>";
-		html+="<td>"+ desplApp +"</td>";
-		html+="<td>"+ desplWeb +"</td>";
+		html+="<td>"+ desplApp +"%</td>";
+		html+="<td>"+ desplWeb +"%</td>";
 		html+="</tr>";
 		// suma totales
 		sumaApp += parseInt(v.vendApp);
@@ -199,15 +222,15 @@ function fillDespliegue(data){
 		sumaDesplApp += parseFloat(desplApp);
 		sumaDesplWeb += parseFloat(desplWeb);
 	})
-	//TOTALES
+	// TOTALES
 	html+="<tr class='table-warning'>";
 	html+="<td>TOTALES</td>";
 	html+="<td>"+ sumaApp +"</td>";
 	html+="<td>"+ sumaWeb +"</td>";
 	html+="<td>"+ sumaOtros +"</td>";
 	html+="<td>"+ sumaTotal +"</td>";
-	html+="<td>"+ sumaDesplApp +"</td>";
-	html+="<td>"+ sumaDesplWeb +"</td>";
+	html+="<td>"+ Math.round( (sumaApp*100/sumaTotal) * 100 )/100 +"%</td>";
+	html+="<td>"+ Math.round( (sumaWeb*100/sumaTotal) * 100 )/100 +"%</td>";
 	html+="</tr>";
 	
 	html+="</tbody>";
@@ -219,7 +242,9 @@ function convertibilidad(){
 	$.ajax({
 		url:"trafico/convertibilidad",
 		type:'post',
-		data:{},
+		data:{
+			mes:$("#slctMes").val()
+		},
 		beforeSend:function(){$(".loading").show();},
 		success:function(obj){
 			$(".loading").hide();
@@ -230,7 +255,7 @@ function convertibilidad(){
 	});
 }
 function fillConvertibilidad(data){
-	//HALLANDO TOTALES
+	// HALLANDO TOTALES
 	var sumaVentApp=0,sumaVentWeb=0,sumaOtros=0,sumaTotal=0;
 	$.each(data,function(k,v){
 		var total = (parseFloat(v.ventasApp) + parseFloat(v.ventasWeb) + parseFloat(v.otros));
@@ -239,7 +264,7 @@ function fillConvertibilidad(data){
 		sumaOtros += parseInt(v.otros);
 		sumaTotal += parseInt(total);
 	})
-	//PINTANDO TABLA
+	// PINTANDO TABLA
 	var html="<thead class='thead-dark'><tr><th scope='col'>ESTADO GESTION</th><th scope='col'>VENTAS APP</th><th scope='col'>VENTAS WEB</th><th scope='col'>VENTAS OTROS</th><th scope='col'>TOTAL</th></tr></thead><tbody>";		
 	$.each(data,function(k,v){
 		var total = (parseFloat(v.ventasApp) + parseFloat(v.ventasWeb) + parseFloat(v.otros));
@@ -251,7 +276,7 @@ function fillConvertibilidad(data){
 		html+="<td title='"+total+"'>"+ Math.round( (total * 100 / sumaTotal) * 100) / 100 +"%</td>";
 		html+="</tr>";
 	})
-	//TOTALES
+	// TOTALES
 	html+="<tr class='table-warning'>";
 	html+="<td>TOTALES</td>";
 	html+="<td>"+ sumaVentApp +"</td>";
@@ -265,13 +290,156 @@ function fillConvertibilidad(data){
 function fillConvertibilidadRegistro(data){
 	var html="<thead class=''><tr class='table-primary'><th scope='col'>VENTAS APP</th><th scope='col'>CAIDAS APP</th><th scope='col'>VENTAS OTRAS</th><th scope='col'>CAIDAS OTRAS</th></tr></thead><tbody>";
 	$.each(data,function(k,v){
+		if(v!=null){
 		html+="<tr>";
 		html+="<td>"+ v.ventasApp +"</td>";
 		html+="<td>"+ v.caidasApp +"</td>";
 		html+="<td>"+ v.ventasOtras +"</td>";
 		html+="<td>"+ v.caidasOtras +"</td>";
 		html+="</tr>";
+		}
 	})
 	html+="</tbody>";
 	$('#tblConvertibilidadRegistros').html(html).show();	
+}
+
+//evolutivo
+function evolutivo(){
+	$.ajax({
+		url:"trafico/evolutivo",
+		type:'post',
+		data:{},
+		beforeSend:function(){$(".loading").show();},
+		success:function(obj){
+			$(".loading").hide();
+			fillEvolutivoTotal(obj.dataT);  
+			fillEvolutivoApp(obj.dataA);
+			fillEvolutivoWeb(obj.dataW);
+		},
+		error:function(){$(".loading").hide();}
+	});
+}
+function fillEvolutivoTotal(data){
+	var html="<thead class='thead-dark'>" +
+			"<tr class='table-primary'><th colspan='6'>TOTAL</th></tr>" +
+			"<tr class='table-primary'>" +
+			"<th scope='col'>MES</th>" +
+			"<th scope='col'>USABILIDAD</th>" +
+			"<th scope='col'>DESPLIEGUE</th>" +
+			"<th scope='col'>VENTAS APP</th>" +
+			"<th scope='col'>VENTAS OTRAS</th>" +
+			"<th scope='col'>ADOPCION</th>" +
+			"</tr></thead><tbody>";
+	$.each(data,function(k,v){
+		var total = parseInt(v.ventasApp) + parseInt(v.ventasOtras);
+		var adopcion = Math.round( (parseInt(v.ventasApp)*100/total) * 100)/100;
+		
+		html+="<tr>";
+		html+="<td>"+ getMes(v.mes) +"</td>";
+		html+="<td>"+ v.usabilidad +"</td>";
+		html+="<td>"+ v.despliegue +"</td>";
+		html+="<td>"+ v.ventasApp +"</td>";
+		html+="<td>"+ v.ventasOtras +"</td>";
+		html+="<td>"+ adopcion +"%</td>";
+		html+="</tr>";		
+	})
+	html+="</tbody>";
+	$('#tblEvolutivoTotal').html(html).show();	
+}
+function fillEvolutivoApp(data){
+	var html="<thead class='thead-dark'>" +
+			"<tr class='table-primary'><th colspan='10'>APP</th></tr>" +
+			"<tr class='table-primary'>" +
+			"<th scope='col'>MES</th>" +
+			"<th scope='col'>APP</th>" +
+			"<th scope='col'>OTROS</th>" +
+			"<th scope='col'>USABILIDAD APP</th>" +
+			"<th scope='col'>VENDEDORES APP</th>" +
+			"<th scope='col'>VENDEDORES OTROS</th>" +
+			"<th scope='col'>DESPLIEGUE</th>" +
+			"<th scope='col'>VENTAS APP</th>" +
+			"<th scope='col'>VENTAS OTRAS</th>" +
+			"<th scope='col'>ADOPCION</th>" +
+			"</tr></thead><tbody>";
+	$.each(data,function(k,v){
+		var total= parseInt(v.app) + parseInt(v.otros);
+		var usabilidadApp = Math.round( (parseInt(v.app)*100/total) * 100 )/100;
+		var totalVend= parseInt(v.vendApp) + parseInt(v.vendOtros);
+		var despliegue = Math.round( (parseInt(v.vendApp)*100/totalVend) * 100 )/100;
+		var totalVentas= parseInt(v.ventasApp) + parseInt(v.ventasOtras);
+		var adopcion = Math.round( (parseInt(v.ventasApp)*100/totalVentas) * 100 )/100;
+		
+		html+="<tr>";
+		html+="<td>"+ getMes(v.mes) +"</td>";
+		html+="<td>"+ v.app +"</td>";
+		html+="<td>"+ v.otros +"</td>";
+		html+="<td>"+ usabilidadApp +"%</td>";
+		html+="<td>"+ v.vendApp +"</td>";
+		html+="<td>"+ v.vendOtros +"</td>";
+		html+="<td>"+ despliegue +"%</td>";
+		html+="<td>"+ v.ventasApp +"</td>";
+		html+="<td>"+ v.ventasOtras +"</td>";
+		html+="<td>"+ adopcion +"%</td>";
+		html+="</tr>";		
+	})
+	html+="</tbody>";
+	$('#tblEvolutivoApp').html(html).show();	
+}
+function fillEvolutivoWeb(data){
+	var html="<thead class='thead-dark'>" +
+			"<tr class='table-primary'><th colspan='10'>WEB</th></tr>" +
+			"<tr class='table-primary'>" +
+			"<th scope='col'>MES</th>" +
+			"<th scope='col'>WEB</th>" +
+			"<th scope='col'>OTROS</th>" +
+			"<th scope='col'>USABILIDAD WEB</th>" +
+			"<th scope='col'>VENDEDORES WEB</th>" +
+			"<th scope='col'>VENDEDORES OTROS</th>" +
+			"<th scope='col'>DESPLIEGUE</th>" +
+			"<th scope='col'>VENTAS WEB</th>" +
+			"<th scope='col'>VENTAS OTRAS</th>" +
+			"<th scope='col'>ADOPCION</th>" +
+			"</tr></thead><tbody>";
+	$.each(data,function(k,v){
+		var total= parseInt(v.web) + parseInt(v.otros);
+		var usabilidadWeb = Math.round( (parseInt(v.web)*100/total) * 100 )/100;
+		var totalVend= parseInt(v.vendWeb) + parseInt(v.vendOtros);
+		var despliegue = Math.round( (parseInt(v.vendWeb)*100/totalVend) * 100 )/100;
+		var totalVentas= parseInt(v.ventasWeb) + parseInt(v.ventasOtras);
+		var adopcion = Math.round( (parseInt(v.ventasWeb)*100/totalVentas) * 100 )/100;
+		
+		html+="<tr>";
+		html+="<td>"+ getMes(v.mes) +"</td>";
+		html+="<td>"+ v.web +"</td>";
+		html+="<td>"+ v.otros +"</td>";
+		html+="<td>"+ usabilidadWeb +"%</td>";
+		html+="<td>"+ v.vendWeb +"</td>";
+		html+="<td>"+ v.vendOtros +"</td>";
+		html+="<td>"+ despliegue +"%</td>";
+		html+="<td>"+ v.ventasWeb +"</td>";
+		html+="<td>"+ v.ventasOtras +"</td>";
+		html+="<td>"+ adopcion +"%</td>";
+		html+="</tr>";		
+	})
+	html+="</tbody>";
+	$('#tblEvolutivoWeb').html(html).show();	
+}
+function getMes(numero){
+	var mes = "";
+	switch (numero) {
+	case "1":mes="ENERO";break;
+	case "2":mes="FEBRERO";break;
+	case "3":mes="MARZO";break;
+	case "4":mes="ABRIL";break;
+	case "5":mes="MAYO";break;
+	case "6":mes="JUNIO";break;
+	case "7":mes="JULIO";break;
+	case "8":mes="AGOSTO";break;
+	case "9":mes="SETIEMBRE";break;
+	case "10":mes="OCTUBRE";break;
+	case "11":mes="NOVIEMBRE";break;
+	case "12":mes="DICIEMBRE";break;
+	default:break;
+	}
+	return mes;
 }

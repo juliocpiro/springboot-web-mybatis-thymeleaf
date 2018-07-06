@@ -1,66 +1,131 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Reportes Trafico</title>
-		
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-		<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}">
-		<link rel="stylesheet" th:href="@{/css/general.css}">
-		
-		<script type="text/javascript" th:src="@{/js/lib/jquery-3.2.1.min.js}" ></script>
-		<script type="text/javascript" th:src="@{/js/lib/popper.min.js}"></script>
-		<script type="text/javascript" th:src="@{/js/lib/bootstrap.min.js}"></script>
-		<script type="text/javascript" th:src="@{/js/general.js}" ></script>
-		<script type="text/javascript" th:src="@{/js/trafico.js}" ></script>
-	</head>
-	<body>
-		<div class="loading" style="display:none;"><img src="/img/load.gif" height="42" width="42"/></div>
-		<!-- header -->
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark   navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#">TRAFICO</a>
-			<i class="fa fa-bar-chart text-white"></i>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			  <span class="navbar-toggler-icon"></span>
-			</button>
-		  
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto"></ul>
-				<form class="form-inline my-2 my-lg-0">
-					<div class="form-group mb-2">
-						<label for="" class="text-white">Reporte</label>
-					</div>
-					<div class="form-group mx-sm-3 mb-2">
-						<select class="custom-select" id="slctReporte">
-							<option value="" selected>Seleccione...</option>
-							<option value="1">Usabilidad</option>
-							<option value="2">Despliegue</option>
-							<option value="3">Adopción</option>
-							<option value="4">Convertibilidad</option>
-						</select>
-					</div>
-					<button type="submit" id="btnExportar" class="btn btn-primary mb-2"><i class="fa fa-search"></i></button>
-				</form>	
-			</div>
-		</nav>
-		
-		<div class="container" style="text-align:center;margin-top:5px;margin-bottom:60px;">
-			<div class="table-responsive" id="divResultados">
-				<table class="table table-sm" id="tblUsabilidad" style="display:none;"></table>
-				<table class="table table-sm" id="tblDespliegue" style="display:none;"></table>
-				<table class="table table-sm" id="tblAdopcion" style="display:none;"></table>
-				<table class="table table-sm table-bordered" id="tblConvertibilidadRegistros" style="display:none;margin-bottom:20px;"></table>
-				<table class="table table-sm" id="tblConvertibilidad" style="display:none;"></table>
-			</div>				
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reportes Trafico</title>
+
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+	integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+	crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/general.css}">
+
+<script type="text/javascript" th:src="@{/js/lib/jquery-3.2.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/lib/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/lib/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/general.js}"></script>
+<script type="text/javascript" th:src="@{/js/trafico.js}"></script>
+</head>
+<body>
+	<div class="loading" style="display: none;">
+		<img src="/img/load.gif" height="42" width="42" />
+	</div>
+	<!-- header -->
+	<nav
+		class="navbar navbar-expand-lg navbar-dark bg-dark   navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">TRAFICO</a> <i
+			class="fa fa-bar-chart text-white"></i>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto"></ul>
 		</div>
-		
-		<!-- footer -->
-		<footer class="bg-dark rounded-top text-center" style="position:fixed;bottom:0px;width:100%;">
-		  <div class="container py-2">
-		    <p class="text-white my-2">&copy; Diana Medrano</p>
-		  </div>
-		</footer>
-	</body>
+	</nav>
+
+	<div class="container"
+		style="text-align: center; margin-top: 5px; margin-bottom: 60px;">
+		<!-- 		<form class="form-inline my-2 my-lg-0"> -->
+		<!-- 			<div class="form-group mb-2"> -->
+		<!-- 				<label for="">Reporte</label> -->
+		<!-- 			</div> -->
+		<!-- 			<div class="form-group mx-sm-3 mb-2"> -->
+		<!-- 				<select class="custom-select" id="slctReporte"> -->
+		<!-- 					<option value="" selected>Seleccione...</option> -->
+		<!-- 					<option value="1">Usabilidad</option> -->
+		<!-- 					<option value="2">Despliegue</option> -->
+		<!-- 					<option value="3">Adopción</option> -->
+		<!-- 					<option value="4">Convertibilidad</option> -->
+		<!-- 				</select> -->
+		<!-- 			</div> -->
+		<!-- 			<button type="submit" id="btnExportar" class="btn btn-primary mb-2"> -->
+		<!-- 				<i class="fa fa-search"></i> -->
+		<!-- 			</button> -->
+		<!-- 		</form> -->
+
+		<form>
+			<div class="form-row align-items-center">
+				<div class="col-auto">
+					<label for="slctReporte">Reporte</label>
+				</div>
+				<div class="col-auto">
+					<div class="input-group mb-2">
+					<select class="custom-select" id="slctReporte">
+						<option value="" selected>Seleccione...</option>
+						<option value="5">Evolutivo</option>
+						<option value="1">Usabilidad</option>
+						<option value="2">Despliegue</option>
+						<option value="3">Adopción</option>
+						<option value="4">Convertibilidad</option>
+					</select>
+					</div>
+				</div>
+				<div class="col-auto" grupo="mes" style="display:none;">
+					<label for="slctMes">Mes</label>
+				</div>
+				<div class="col-auto" grupo="mes" style="display:none;">
+					<div class="input-group mb-2">
+					<select class="custom-select" id="slctMes">
+						<option value="1">Enero</option>
+						<option value="2">Febrero</option>
+						<option value="3">Marzo</option>
+						<option value="4">Abril</option>
+						<option value="5">Mayo</option>
+						<option value="6">Junio</option>
+						<option value="7" selected>Julio</option>
+						<option value="8">Agosto</option>
+						<option value="9">Setiembre</option>
+						<option value="10">Octubre</option>
+						<option value="11">Noviembre</option>
+						<option value="12">Diciembre</option>
+					</select>
+					</div>
+				</div>
+				<div class="col-auto">
+					<button type="submit" id="btnExportar" class="btn btn-primary mb-2">
+						<i class="fa fa-search"></i> Consultar
+					</button>
+				</div>
+			</div>
+		</form>
+
+		<div class="table-responsive" id="divResultados">
+			<table class="table table-sm" id="tblUsabilidad" style="display: none;"></table>
+			<table class="table table-sm" id="tblDespliegue" style="display: none;"></table>
+			<table class="table table-sm" id="tblAdopcion" style="display: none;"></table>
+			<table class="table table-sm table-bordered" id="tblConvertibilidadRegistros" style="display: none; margin-bottom: 20px;"></table>
+			<table class="table table-sm" id="tblConvertibilidad" style="display: none;"></table>
+			<table class="table table-sm" id="tblEvolutivoTotal" style="display: none;"></table>
+			<table class="table table-sm" id="tblEvolutivoApp" style="display: none;"></table>
+			<table class="table table-sm" id="tblEvolutivoWeb" style="display: none;"></table>
+		</div>
+	</div>
+
+	<!-- footer -->
+	<footer class="bg-dark rounded-top text-center"
+		style="position: fixed; bottom: 0px; width: 100%;">
+		<div class="container py-2">
+			<p class="text-white my-2">&copy; TGESTIONA - dmedranoh</p>
+		</div>
+	</footer>
+</body>
 </html>

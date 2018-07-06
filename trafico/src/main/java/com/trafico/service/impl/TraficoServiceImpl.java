@@ -12,6 +12,9 @@ import com.trafico.model.Adopcion;
 import com.trafico.model.Convertibilidad;
 import com.trafico.model.ConvertibilidadRegistro;
 import com.trafico.model.Despliegue;
+import com.trafico.model.EvolutivoApp;
+import com.trafico.model.EvolutivoTotal;
+import com.trafico.model.EvolutivoWeb;
 import com.trafico.model.Trafico;
 import com.trafico.model.Usabilidad;
 import com.trafico.service.TraficoService;
@@ -44,10 +47,10 @@ public class TraficoServiceImpl implements TraficoService	{
 	}
 	
 	@Override
-	public List<Adopcion> adopcion(){
+	public List<Adopcion> adopcion(Integer mes){
 		List<Adopcion> retorno = null;
 		try {
-			retorno = traficoMapper.adopcion();
+			retorno = traficoMapper.adopcion(mes);
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
@@ -55,33 +58,63 @@ public class TraficoServiceImpl implements TraficoService	{
 	}
 	
 	@Override
-	public List<Despliegue> despliegue(){
+	public List<Despliegue> despliegue(Integer mes){
 		List<Despliegue> retorno = null;
 		try {
-			retorno = traficoMapper.despliegue();
+			retorno = traficoMapper.despliegue(mes);
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
 		return retorno;
 	}
 	@Override
-	public List<Convertibilidad> convertibilidad(){
+	public List<Convertibilidad> convertibilidad(Integer mes){
 		List<Convertibilidad> retorno = null;
 		try {
-			retorno = traficoMapper.convertibilidad();
+			retorno = traficoMapper.convertibilidad(mes);
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
 		return retorno;
 	}	
 	@Override
-	public List<ConvertibilidadRegistro> convertibilidadRegistro(){
+	public List<ConvertibilidadRegistro> convertibilidadRegistro(Integer mes){
 		List<ConvertibilidadRegistro> retorno = null;
 		try {
-			retorno = traficoMapper.convertibilidadRegistro();
+			retorno = traficoMapper.convertibilidadRegistro(mes);
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
 		return retorno;
 	}	
+	@Override
+	public List<EvolutivoTotal> evolutivoTotal(){
+		List<EvolutivoTotal> retorno = null;
+		try {
+			retorno = traficoMapper.evolutivoTotal();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return retorno;
+	}
+	@Override
+	public List<EvolutivoApp> evolutivoApp(){
+		List<EvolutivoApp> retorno = null;
+		try {
+			retorno = traficoMapper.evolutivoApp();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return retorno;
+	}
+	@Override
+	public List<EvolutivoWeb> evolutivoWeb(){
+		List<EvolutivoWeb> retorno = null;
+		try {
+			retorno = traficoMapper.evolutivoWeb();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return retorno;
+	}
 }
